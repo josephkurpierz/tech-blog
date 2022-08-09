@@ -3,13 +3,14 @@ const sequelize = require('../../config/connection');
 const { Post, User, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// get all users
+// get all posts
 router.get('/', (req, res) => {
   console.log('======================');
   Post.findAll({
+    order: [['created_at','DESC']],
     attributes: [
       'id',
-      'post_url',
+      'post_text',
       'title',
       'created_at',
     ],
@@ -77,19 +78,10 @@ router.get('/:id', (req, res) => {
 router.post('/', withAuth, (req, res) => {
   Post.create({
     title: req.body.title,
-    post_url: req.body.post_url,
+    post_text: req.body.post_text,
     user_id: req.session.user_id
   })
     .then(dbPostData => res.json(dbPostData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
-
-router.put('/upvote', withAuth, (req, res) => {
-  Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
-    .then(updatedVoteData => res.json(updatedVoteData))
     .catch(err => {
       console.log(err);
       res.status(500).json(err);

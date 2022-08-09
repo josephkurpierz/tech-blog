@@ -1,0 +1,12 @@
+<div class="comment-section">
+    {{#each this}}
+    <section class="comment margin-10">
+        <div class="comment-text">
+            {{comment_text}}
+        </div>
+        <div>
+            by {{user.username}} on {{format_date created_at}}
+        </div>
+    </section>
+    {{/each}}
+</div>

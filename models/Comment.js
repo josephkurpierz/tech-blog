@@ -3,19 +3,19 @@ const sequelize = require("../config/connection");
 
 class Comment extends Model {}
 
-
 Comment.init(
   {
-    id:{
+    id: {
       type: DataTypes.INTEGER,
-      primarykey: true,
-      autoIncrement: true
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
     comment_text: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate:{
-        len:[4]
+      validate: {
+        len: [4],
       },
     },
     user_id: {
@@ -39,9 +39,8 @@ Comment.init(
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: "comment",
+    modelName: "comment"
   }
 );
 
 module.exports = Comment;
-
